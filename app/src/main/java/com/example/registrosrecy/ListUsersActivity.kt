@@ -10,14 +10,16 @@ import com.example.registrosrecy.Adaptadores.MiAdaptadorRecycler
 import com.example.registrosrecy.databinding.ActivityListUsersBinding
 
 class ListUsersActivity : AppCompatActivity() {
-    var contenedor = intent.getSerializableExtra("usuarios") as Contenedor
     lateinit var miRecyclerView : RecyclerView
     lateinit var binding: ActivityListUsersBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityListUsersBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        var contenedor = intent.getSerializableExtra("usuarios") as Contenedor
 
         Log.e("Alfredo", contenedor.usuarios.toString())
 

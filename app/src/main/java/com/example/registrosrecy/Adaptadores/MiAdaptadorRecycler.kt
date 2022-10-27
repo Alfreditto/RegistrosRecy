@@ -2,6 +2,7 @@ package com.example.registrosrecy.Adaptadores
 
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.registrosrecy.R
 import com.example.registrosrecy.modelos.Usuario
 import com.bumptech.glide.Glide
-
+import java.io.File
 
 
 class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Context) :
@@ -92,7 +93,13 @@ class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Conte
         ) {
             nombrePersonaje.text = pers.nombre
             tipoPersonaje.text = pers.apellido
-            //avatar.setImageDrawable()
+
+            var fotoFichero =
+                File(
+                    context.getExternalFilesDir(null),
+                    pers.nombre + pers.apellido
+                )
+            avatar.setImageBitmap(fotoFichero.let { BitmapFactory.decodeFile(it.absolutePath) })
 
             //Para marcar o desmarcar al seleccionado usamos el siguiente código.
             if (pos == seleccionado) {
