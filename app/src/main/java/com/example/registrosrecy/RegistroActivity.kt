@@ -29,12 +29,12 @@ class RegistroActivity : AppCompatActivity() {
         binding.btnRegVolver.setOnClickListener {
             val txtNombre = binding.txtNombre.text.toString()
             val txtApellido = binding.txtApellido.text.toString()
-            val imgUser = binding.imgUser.toString()
+            val txtFoto = binding.imgUser.toString()
             if (txtNombre.isEmpty() || txtApellido.isEmpty()) {
                 Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             } else {
                 var usuario: Usuario = Usuario(
-                    txtNombre, txtApellido, photo
+                    txtNombre, txtApellido, txtFoto
                 )
                 Log.v("Usuario", usuario.toString())
                 val intent = Intent()

@@ -1,4 +1,4 @@
-package com.example.registrarse.modelos
+package com.example.registrosrecy.modelos
 
 import com.example.registrosrecy.modelos.Usuario
 
