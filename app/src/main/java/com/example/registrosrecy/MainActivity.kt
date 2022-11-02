@@ -27,8 +27,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         var usuariosSQL = Conexion.obtenerusuarios(this)
-        Usuario.codigo_com = usuariosSQL.last().codigo
-        contenedor.usuarios = usuariosSQL
+        if (usuariosSQL.isNotEmpty()) {
+            contenedor.usuarios = usuariosSQL
+            Usuario.codigo_com = usuariosSQL.last().codigo
+        }
 
         binding.btnReg.setOnClickListener {
             val intento: Intent = Intent(this, RegistroActivity::class.java)
