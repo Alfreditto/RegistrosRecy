@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.btnReg.setOnClickListener {
             val intento: Intent = Intent(this, RegistroActivity::class.java)
             resultLauncher.launch(intento)
