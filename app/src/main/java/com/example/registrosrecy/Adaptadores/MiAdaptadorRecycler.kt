@@ -94,12 +94,12 @@ class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Conte
             nombrePersonaje.text = pers.nombre
             tipoPersonaje.text = pers.apellido
 
-            var fotoFichero =
+            /*var fotoFichero =
                 File(
                     context.getExternalFilesDir(null),
                     pers.nombre + pers.apellido
-                )
-            avatar.setImageBitmap(fotoFichero.let { BitmapFactory.decodeFile(it.absolutePath) })
+                )*/
+            avatar.setImageBitmap(BitmapFactory.decodeByteArray(pers.foto, 0, pers.foto.size))
 
             //Para marcar o desmarcar al seleccionado usamos el siguiente código.
             if (pos == seleccionado) {

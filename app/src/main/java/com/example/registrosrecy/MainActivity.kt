@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.registrosrecy.auxiliar.Conexion
 import com.example.registrosrecy.modelos.Contenedor
 import com.example.registrosrecy.modelos.Usuario
 import com.example.registrosrecy.databinding.ActivityMainBinding
@@ -11,7 +12,7 @@ import com.example.registrosrecy.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var contenedor : Contenedor= Contenedor()
+    private var contenedor: Contenedor = Contenedor()
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -25,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var usuariosSQL = Conexion.obtenerusuarios(this)
+        Usuario.codigo_com = usuariosSQL.last().codigo
+        contenedor.usuarios = usuariosSQL
 
         binding.btnReg.setOnClickListener {
             val intento: Intent = Intent(this, RegistroActivity::class.java)
