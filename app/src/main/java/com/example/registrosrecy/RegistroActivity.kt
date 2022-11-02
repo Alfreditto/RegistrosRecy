@@ -1,5 +1,6 @@
 package com.example.registrosrecy
 
+import com.example.registrosrecy.auxiliar.Conexion
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,12 +15,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.registrosrecy.databinding.ActivityRegistroBinding
 import com.example.registrosrecy.modelos.Usuario
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
 class RegistroActivity : AppCompatActivity() {
     private val cameraRequest = 1888
     lateinit var photo: Bitmap
+    lateinit var photo_aux: ByteArray
     lateinit var binding: ActivityRegistroBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +37,10 @@ class RegistroActivity : AppCompatActivity() {
                 Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             } else {
                 var usuario: Usuario = Usuario(
-                    txtNombre, txtApellido, txtFoto
+                    Usuario.getCodigo(), txtNombre, txtApellido, photo_aux
                 )
+                Conexion.addUsuario(this, usuario)
+
                 Log.v("Usuario", usuario.toString())
                 val intent = Intent()
                 intent.putExtra("usuarioReg", usuario)
@@ -70,7 +75,12 @@ class RegistroActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         try {
             if (requestCode == cameraRequest) {
+
                 photo = data?.extras?.get("data") as Bitmap
+                //Esto convierte el Bitmap a un ByteArray
+                val stream = ByteArrayOutputStream()
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                photo_aux = stream.toByteArray()
                 binding.imgUser.setImageBitmap(photo)
 
                 var fotoFichero =
