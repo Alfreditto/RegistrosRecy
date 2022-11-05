@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.registrosrecy.R
 import com.example.registrosrecy.modelos.Usuario
 import com.bumptech.glide.Glide
+import com.example.registrosrecy.auxiliar.Conexion
 import java.io.File
 
 
@@ -125,6 +126,8 @@ class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Conte
                         //Importante, si no esta seleccionado da error
                         val seleccionado1 = seleccionado
                         personajes.removeAt(seleccionado1)
+                        //No deja borrar
+                        //Conexion.delUsuario(context, pers.codigo)
                         Log.e("Alfredo", personajes.toString())
                         miAdaptadorRecycler.notifyItemRemoved(seleccionado)
                     }

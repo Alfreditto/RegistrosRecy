@@ -25,7 +25,7 @@ object Conexion {
         bd.close()
     }
 
-    fun delUsuario(contexto: AppCompatActivity, codigo: String): Int {
+    fun delUsuario(contexto: AppCompatActivity, codigo: Int): Int {
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
         val cant = bd.delete("usuarios", "codigo='${codigo}'", null)
