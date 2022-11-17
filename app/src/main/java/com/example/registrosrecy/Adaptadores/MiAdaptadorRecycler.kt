@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.registrosrecy.R
 import com.example.registrosrecy.modelos.Usuario
 import com.bumptech.glide.Glide
@@ -20,12 +21,13 @@ import com.example.registrosrecy.auxiliar.Conexion
 import java.io.File
 
 
-class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Context) :
+class MiAdaptadorRecycler(personajes: ArrayList<Usuario>, var context: Context) :
     RecyclerView.Adapter<MiAdaptadorRecycler.ViewHolder>() {
 
     companion object {
         //Esta variable estática nos será muy útil para saber cual está marcado o no.
         var seleccionado: Int = -1
+        lateinit var personajes: ArrayList<Usuario>
         /*
         PAra marcar o desmarcar un elemento de la lista lo haremos diferente a una listView. En la listView el listener
         está en la activity por lo que podemos controlar desde fuera el valor de seleccionado y pasarlo al adapter, asociamos
@@ -43,7 +45,7 @@ class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Conte
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = personajes.get(position)
-        holder.bind(item, context, position, this, personajes)
+        holder.bind(item, context, position, this)
     }
 
     /**
@@ -89,8 +91,7 @@ class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Conte
             pers: Usuario,
             context: Context,
             pos: Int,
-            miAdaptadorRecycler: MiAdaptadorRecycler,
-            personajes: ArrayList<Usuario>
+            miAdaptadorRecycler: MiAdaptadorRecycler
         ) {
             nombrePersonaje.text = pers.nombre
             tipoPersonaje.text = pers.apellido
@@ -125,9 +126,8 @@ class MiAdaptadorRecycler(var personajes: ArrayList<Usuario>, var context: Conte
                     setPositiveButton("OK") { dialog: DialogInterface, which: Int ->
                         //Importante, si no esta seleccionado da error
                         val seleccionado1 = seleccionado
+                        Conexion.delUsuario(context as AppCompatActivity, pers.codigo)
                         personajes.removeAt(seleccionado1)
-                        //No deja borrar
-                        //Conexion.delUsuario(context, pers.codigo)
                         Log.e("Alfredo", personajes.toString())
                         miAdaptadorRecycler.notifyItemRemoved(seleccionado)
                     }
